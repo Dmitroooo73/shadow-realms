@@ -1,0 +1,12 @@
+﻿# Python
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+frontend-new/node_modules/
+frontend-new/dist/
+.env
+.env.local
+*.db
+.vscode/
+.idea/

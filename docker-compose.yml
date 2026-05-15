@@ -1,0 +1,88 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: shadow_realms_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-shadow_realms}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-shadow_realms}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [appnet]
+
+  minio:
+    image: minio/minio:latest
+    container_name: shadow_realms_minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY:-minioadmin}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [appnet]
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: shadow_realms_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-shadow_realms}
+      SECRET_KEY: ${SECRET_KEY:-change-me-in-prod}
+      S3_ENDPOINT_URL: http://minio:9000
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY:-minioadmin}
+      S3_SECRET_KEY: ${S3_SECRET_KEY:-minioadmin}
+      S3_BUCKET_NAME: ${S3_BUCKET_NAME:-shadow-realms}
+      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL:-http://localhost}
+      DND_API_BASE: ${DND_API_BASE:-https://www.dnd5eapi.co/api/2014}
+      HF_TOKEN: ${HF_TOKEN:-}
+      PUBLIC_S3_URL: http://localhost:9000
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    networks: [appnet]
+
+  frontend:
+    build:
+      context: ./frontend-new
+      dockerfile: Dockerfile
+      args:
+        VITE_API_BASE: /api-proxy
+    container_name: shadow_realms_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "80:80"
+    networks: [appnet]
+
+volumes:
+  postgres_data:
+  minio_data:
+
+networks:
+  appnet:
+    driver: bridge

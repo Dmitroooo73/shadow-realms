@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&display=swap');
+
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply text-white;
+    font-family: 'Cinzel', Georgia, serif;
+    letter-spacing: 0.01em;
+    background: linear-gradient(135deg, #0a0118 0%, #1a0b2e 25%, #16213e 50%, #0f3460 75%, #1a1a2e 100%);
+    background-attachment: fixed;
+  }
+}
+
+.animated-bg {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.animated-bg video {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5);
+  opacity: 1;
+  transition: filter 1s ease;
+}
+
+.animated-bg::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 0;
+}
+
+.theme-dark input,
+.theme-dark select,
+.theme-dark button {
+  transition: all 0.3s ease;
+}
+
+.theme-dark button:not(.btn-toggle):not(#themeBtn) {
+  @apply bg-blue-700 hover:bg-blue-600 transition-colors duration-300 shadow-lg shadow-blue-900/50;
+}
+
+.theme-dark .card {
+  @apply bg-gray-800 border-gray-700;
+}
+
+.theme-dark .text-primary {
+  @apply text-yellow-400;
+}
+
+.theme-epic .animated-bg video {
+  filter: brightness(0.3);
+}
+
+.theme-epic .animated-bg::after {
+  background: rgba(4, 5, 23, 0.7);
+}
+
+.theme-epic .text-primary {
+  @apply text-red-500;
+}
+
+.theme-epic button:not(.btn-toggle):not(#themeBtn) {
+  @apply bg-red-700 hover:bg-red-600 transition-colors duration-300 shadow-lg shadow-red-900/50;
+}
+
+.theme-epic .card {
+  @apply bg-gray-900 border-red-800;
+}
+
+.theme-epic input,
+.theme-epic select {
+  @apply bg-gray-900 border-red-700 focus:border-red-500;
+}
+
+.reveal-item {
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+  filter: blur(4px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out, filter 0.6s ease-out;
+}
+
+.reveal-item.revealed {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-item {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+[data-tilt] {
+  transition: transform 0.1s ease-out;
+  transform-style: preserve-3d;
+}
+
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+  --text-shadow-hard: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --text-shadow-hard: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+#canvas-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #a78bfa, #ec4899, #f43f5e);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+}
+
+.pulse {
+  animation: pulse-anim 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-anim {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.float {
+  animation: float-anim 3s ease-in-out infinite;
+}
+
+@keyframes float-anim {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.glow {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(168, 85, 247, 0.8); }
+}
+
+.theme-dark {
+  --bg-primary: #111827;
+  --bg-secondary: #1f2937;
+  --border-color: #374151;
+  --text-primary: #f3f4f6;
+  --accent: #06b6d4;
+}
+
+.theme-dark body {
+  background: linear-gradient(135deg, #0a0118 0%, #1a0b2e 25%, #16213e 50%, #0f3460 75%, #1a1a2e 100%);
+  background-attachment: fixed;
+}
+
+.theme-fantasy {
+  --bg-primary: #18181b;
+  --bg-secondary: #27272a;
+  --border-color: #f43f5e;
+  --text-primary: #fecdd3;
+  --accent: #ec4899;
+}
+
+.theme-fantasy body {
+  background: linear-gradient(135deg, #0a0012 0%, #1a0b1e 20%, #2d0a2e 40%, #3f0d3a 60%, #1a0520 80%, #0d0015 100%);
+  background-attachment: fixed;
+}
+
+.theme-fantasy .animated-bg video {
+  filter: brightness(0.3) saturate(1.5) hue-rotate(15deg);
+}
+
+.theme-fantasy .animated-bg::after {
+  background: radial-gradient(circle at 30% 50%, rgba(236, 72, 153, 0.3), transparent 60%),
+              radial-gradient(circle at 70% 30%, rgba(244, 63, 94, 0.2), transparent 50%),
+              rgba(0, 0, 0, 0.7);
+}
+
+.theme-fantasy h1,
+.theme-fantasy h2,
+.theme-fantasy h3 {
+  color: #fda4af;
+  text-shadow: 0 0 20px rgba(236, 72, 153, 0.7);
+}
+
+.theme-fantasy .card {
+  background: linear-gradient(135deg, rgba(39, 39, 42, 0.95), rgba(24, 24, 27, 0.95));
+  border: 1px solid rgba(244, 63, 94, 0.5);
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.3);
+}
+
+.theme-fantasy button:not(#themeBtn) {
+  background: linear-gradient(135deg, #ec4899, #f43f5e) !important;
+  box-shadow: 0 0 20px rgba(236, 72, 153, 0.5) !important;
+}
+
+.theme-fantasy button:not(#themeBtn):hover {
+  background: linear-gradient(135deg, #db2777, #e11d48) !important;
+  box-shadow: 0 0 30px rgba(236, 72, 153, 0.8) !important;
+}
+
+.theme-fantasy input,
+.theme-fantasy select,
+.theme-fantasy textarea {
+  background: rgba(39, 39, 42, 0.7) !important;
+  border: 1px solid rgba(244, 63, 94, 0.4) !important;
+  color: #fecdd3 !important;
+}
+
+.theme-fantasy input:focus,
+.theme-fantasy select:focus,
+.theme-fantasy textarea:focus {
+  border-color: #ec4899 !important;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.2) !important;
+}
+
+@keyframes neon-pulse {
+  0%, 100% { 
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+  50% { 
+    text-shadow: 0 0 20px currentColor, 0 0 40px currentColor, 0 0 60px currentColor;
+  }
+}
+
+.theme-fantasy .gradient-text {
+  animation: gradient-shift 3s ease infinite, neon-pulse 2s ease-in-out infinite;
+}

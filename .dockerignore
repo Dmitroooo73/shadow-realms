@@ -1,0 +1,9 @@
+.git/
+.idea/
+.vscode/
+*.md
+!README.md
+backend/venv/
+backend/__pycache__/
+frontend-new/node_modules/
+frontend-new/dist/

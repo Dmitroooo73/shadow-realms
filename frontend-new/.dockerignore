@@ -1,0 +1,16 @@
+node_modules/
+dist/
+coverage/
+test-results/
+playwright-report/
+.vite/
+.env
+.env.*
+!.env.example
+.git/
+.gitignore
+.idea/
+.vscode/
+Dockerfile
+.dockerignore
+README.md
