@@ -1,4 +1,4 @@
-# 🎭 Изумительная бабка AI — RPG с AI Dungeon Master
+# Изумительная бабка AI — RPG с AI Dungeon Master
 
 [![GitHub](https://img.shields.io/badge/GitHub-Dmitroooo73/shadow--realms-blue?style=flat-square&logo=github)](https://github.com/Dmitroooo73/shadow-realms)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.119.0-009688?style=flat-square)](https://fastapi.tiangolo.com/)
@@ -8,34 +8,34 @@
 
 Полнофункциональное веб-приложение для текстовых ролевых приключений с **AI-управляемым Dungeon Master**. Игроки создают персонажей, развивают их, участвуют в боях и получают **AI-сгенерированные истории** с визуальными сценами.
 
-## ✨ Основные возможности
+## Основные возможности
 
-### 🎮 Игровой процесс
+### Игровой процесс
 - **Создание персонажей** с разными расами (эльф, гном, человек, дракон) и классами (воин, маг, вор, паладин)
 - **AI-генерация историй** через Claude API с D&D-стилем нарратива
 - **Система боевых действий** с расчётом урона, критических ударов, магических способностей
 - **RPG-система**: уровни, HP, XP, инвентарь, предметы с эффектами (исцеление, баф урона, защиты)
 - **Спутники (компаньоны)** с собственными характеристиками и боевыми навыками
 
-### 🌍 Мультиплеер
+### Мультиплеер
 - **Лидерборд** с топом героев по разным метрикам (уровень, XP, количество историй)
 - **Грейвард** — список павших героев всех игроков с статистикой
 - **Public Feed** — real-time活动 других игроков (живой фид на главной)
 - **Система достижений** — вычисляемые бейджи (убийца драконов, маг, паладин и т.д.)
 
-### 🎨 Визуальная часть
+### Визуальная часть
 - **Автоматическая генерация сцен** истории через Pollinations.ai (с fallback-системой)
 - **Загрузка аватаров** персонажей в S3-хранилище
 - **Сложные Canvas-анимации**:
-  - 💥 Particle burst при победе
-  - 🔴 Red screen flash при уроне + shake
-  - 🟢 Green pulse при исцелении
-  - 🌀 Dark portal при смерти врага
-  - ⭐ Floating symbols при level-up
-  - 🎴 3D tilt-эффект на карточках персонажей
-  - ✨ Reveal animations при скролле
+  -  Particle burst при победе
+  -  Red screen flash при уроне + shake
+  -  Green pulse при исцелении
+  -  Dark portal при смерти врага
+  -  Floating symbols при level-up
+  -  3D tilt-эффект на карточках персонажей
+  -  Reveal animations при скролле
 
-### 🔐 Авторизация & Безопасность
+### Авторизация & Безопасность
 - **JWT-токены** с refresh-механизмом
 - **Role-Based Access Control (RBAC)** — роли admin и user
 - **Хеширование паролей** через bcrypt + salt
@@ -43,7 +43,7 @@
 
 ---
 
-## 🛠️ Технологический стек
+## Технологический стек
 
 ### Backend
 ```
@@ -86,7 +86,7 @@ pytest-cov              — code coverage анализ
 
 ---
 
-## 📋 Требования
+## Требования
 
 ### Системные требования
 - **Docker** 20.10+ и **Docker Compose** 2.0+
@@ -100,7 +100,7 @@ pytest-cov              — code coverage анализ
 
 ---
 
-## 🚀 Установка и запуск
+## Установка и запуск
 
 ### Вариант 1: Docker (рекомендуется)
 
@@ -181,7 +181,7 @@ Frontend будет на http://localhost:5173
 
 ---
 
-## 📁 Структура проекта
+## Структура проекта
 
 ```
 shadow-realms/
@@ -246,7 +246,7 @@ shadow-realms/
 
 ---
 
-## 🔌 API Endpoints
+## API Endpoints
 
 ### Авторизация
 ```
@@ -294,9 +294,9 @@ GET    /public/characters/{id}/achievements — Достижения
 
 ---
 
-## 🎯 Ключевые фичи реализации
+## Ключевые фичи реализации
 
-### 1️⃣ Асинхронная генерация картинок
+### Асинхронная генерация картинок
 ```python
 # Text возвращается сразу, картинка генерируется в фоне
 @router.post("/stories/{story_id}/action")
@@ -313,7 +313,7 @@ async def perform_action(story_id: int, ...):
     return {"text": story_text, "image_url": None}  # Картинка загрузится позже
 ```
 
-### 2️⃣ Fallback система для image generation
+### Fallback система для image generation
 ```python
 # Если Pollinations.ai не отвечает, пробует другие API
 async def generate_scene_image(prompt: str) -> Optional[bytes]:
@@ -327,7 +327,7 @@ async def generate_scene_image(prompt: str) -> Optional[bytes]:
     return None  # Graceful failure
 ```
 
-### 3️⃣ Canvas анимации с физикой
+### Canvas анимации с физикой
 ```typescript
 // Particle burst при победе
 const particles = Array.from({ length: 200 }, () => ({
@@ -350,7 +350,7 @@ const animate = () => {
 };
 ```
 
-### 4️⃣ Ролевая безопасность (RBAC)
+### Ролевая безопасность (RBAC)
 ```python
 # Только админ может удалить персонажа другого пользователя
 @router.delete("/characters/{char_id}")
@@ -368,7 +368,7 @@ async def delete_character(
     crud.delete_character(db, char_id)
 ```
 
-### 5️⃣ Оптимизация на canvas (DPR)
+### Оптимизация на canvas (DPR)
 ```typescript
 // Правильный рендер на Retina дисплеях
 const DPR = Math.min(2, window.devicePixelRatio || 1);
@@ -382,7 +382,7 @@ ctx.scale(DPR, DPR);  // Масштабируем контекст
 
 ---
 
-## 📊 Архитектура
+## Архитектура
 
 ### Backend архитектура
 ```
@@ -422,7 +422,7 @@ User reads story + sees animations
 
 ---
 
-## 🧪 Тестирование
+## Тестирование
 
 ```bash
 # Unit тесты
@@ -444,7 +444,7 @@ pytest --cov --cov-report=html
 
 ---
 
-## 📈 Производительность
+## Производительность
 
 | Метрика | Значение |
 |---------|----------|
@@ -457,9 +457,9 @@ pytest --cov --cov-report=html
 
 ---
 
-## 🔒 Безопасность
+## Безопасность
 
-✅ **Защиты реализованы:**
+ **Защиты реализованы:**
 - SQL injection protection (SQLAlchemy ORM)
 - XSS prevention (React автоматически экранирует)
 - CSRF protection (JWT вместо cookies)
@@ -469,7 +469,7 @@ pytest --cov --cov-report=html
 - JWT refresh token rotation
 - Input validation (Pydantic)
 
-⚠️ **Что добавить для production:**
+ **Что добавить для production:**
 - Rate limiting (slowapi)
 - Helmet для Headers
 - SQL injection дополнительная защита
@@ -479,7 +479,7 @@ pytest --cov --cov-report=html
 
 ---
 
-## 🌐 Развёртывание
+## Развёртывание
 
 ### На localhost (Docker)
 ```bash
@@ -500,7 +500,7 @@ docker compose up -d
 
 ---
 
-## 📝 Переменные окружения
+## Переменные окружения
 
 ```bash
 # Database
@@ -528,7 +528,7 @@ ENVIRONMENT=production
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Docker проблемы
 ```bash
@@ -568,7 +568,7 @@ npm run dev
 
 ---
 
-## 🎓 Чему можно научиться из этого проекта
+## Чему можно научиться из этого проекта
 
 1. **Full-stack разработка** — от БД до UI
 2. **Async Python** — FastAPI, asyncio, asyncpg
@@ -583,7 +583,7 @@ npm run dev
 
 ---
 
-## 📞 Контакты
+## Контакты
 
 - **GitHub**: [Dmitroooo73](https://github.com/Dmitroooo73)
 - **Email**: rits1144@gmail.com
@@ -591,9 +591,9 @@ npm run dev
 
 ---
 
-## 📄 Лицензия
+## Лицензия
 
-MIT License — используй как хочешь, со ссылкой на оригинал 🙏
+MIT License — используй как хочешь, со ссылкой на оригинал 
 
 ---
 
